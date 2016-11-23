@@ -96,7 +96,7 @@ module.exports.workoutsAddOne = function(req, res) {
     Workout
         .create({
             name: req.body.name,
-            user: req.body.userEmail
+            user: req.body.email
         }, function(err, workout) {
             if (err) {
                 console.log("Error creating workout");
