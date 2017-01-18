@@ -39,6 +39,13 @@ app.use('/api', expressjwt({ secret: process.env.JWT_SECRET }), routesApi);
 
 app.use('/', routes);
 
+// Catch unauthorized errors
+app.use(function(err, req, res, next) {
+    if (err.name === 'UnauthorizedError') {
+        res.status(401);
+        res.json({ "message": err.name + ": " + err.message });
+    }
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -58,12 +65,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// Catch unauthorized errors
-app.use(function(err, req, res, next) {
-    if (err.name === 'UnauthorizedError') {
-        res.status(401);
-        res.json({ "message": err.name + ": " + err.message });
-    }
-});
+
 
 module.exports = app;
